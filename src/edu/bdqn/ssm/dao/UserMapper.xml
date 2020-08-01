@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.bdqn.ssm.dao.UserMapper">
+    <!-- public void saveUsers(Map<String,Object> params); -->
+    <parameterMap type="java.util.Map" id="saveUsersMap">
+        <!-- property属性是键，jdbcType是该属性的数据库类型，mode表示输入参数 -->
+        <parameter property="un" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="ac" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="pw" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="se" jdbcType="VARCHAR" mode="IN" />
+    </parameterMap>
+    <insert id="saveUser" statementType="CALLABLE" parameterMap="saveUsersMap">
+		{call saveUser(?,?,?,?)}
+	</insert>
+
+
+    <!-- public Map<String,Object> login(Map<String,Object> params); -->
+    <parameterMap type="java.util.Map" id="loginPMap">
+        <!-- property属性是键，jdbcType是该属性的数据库类型，mode表示输入参数 -->
+        <parameter property="ac" jdbcType="VARCHAR" mode="IN" />
+        <parameter property="pw" jdbcType="VARCHAR" mode="IN" />
+    </parameterMap>
+    <select id="login" statementType="CALLABLE" parameterMap="loginPMap"
+            resultType="INTEGER">
+		{call login(?,?)}
+	</select>
+
+    <!-- 2)public List<Users> loadUsers(); -->
+    <select id="loadUser" resultType="User">
+		select * from user
+	</select>
+
+    <delete id="delete">
+        delete from `user` where uid=#{uid}
+    </delete>
+</mapper>
